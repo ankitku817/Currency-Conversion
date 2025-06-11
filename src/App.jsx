@@ -30,68 +30,59 @@ function App() {
     setAmount(convertedAmount);
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="text-center p-10 text-white">Loading...</div>;
+  if (error) return <div className="text-center p-10 text-red-500">Error: {error}</div>;
 
   return (
     <div
-      className="w-full h-screen flex bg-cover bg-no-repeat"
+      className="min-h-screen flex flex-col md:flex-row bg-cover bg-no-repeat"
       style={{
         backgroundImage: `url('https://images.pexels.com/photos/3532540/pexels-photo-3532540.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')`,
       }}
     >
-      
-      <div className="w-1/3 h-full bg-gray-900 text-white flex items-center justify-center">
+      <div className="w-full md:w-1/3 bg-gray-900 text-white">
         <Footer />
       </div>
 
-      
-      <div className="w-2/3 h-full flex items-center justify-center">
-        <div className="max-w-fit">
-          <div className="w-full max-w-md mx-auto border border-gray-60 rounded-lg p-5 backdrop-blur-sm bg-white/30">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-              }}
-            >
-              <div className="w-full mb-1">
-                <InputBox
-                  label="From"
-                  amount={amount}
-                  currencyOptions={options}
-                  onCurrencyChange={(currency) => setFrom(currency)}
-                  selectCurrency={from}
-                  onAmountChange={(amount) => setAmount(amount)}
-                />
-              </div>
-              <div className="relative w-full h-0.5">
-                <button
-                  type="button"
-                  className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md text-white px-2 py-0.5"
-                  onClick={swap}
-                >
-                  🔄
-                </button>
-              </div>
-              <div className="w-full mt-1 mb-4">
-                <InputBox
-                  label="To"
-                  amount={convertedAmount}
-                  currencyOptions={options}
-                  onCurrencyChange={(currency) => setTo(currency)}
-                  selectCurrency={to}
-                  amountDisable
-                />
-              </div>
+      <div className="w-full md:w-2/3 flex items-center justify-center py-6 px-4">
+        <div className="w-full max-w-md mx-auto border border-gray-60 rounded-lg p-5 backdrop-blur-sm bg-white/30">
+          <form onSubmit={(e) => e.preventDefault()}>
+            <InputBox
+              label="From"
+              amount={amount}
+              currencyOptions={options}
+              onCurrencyChange={(currency) => setFrom(currency)}
+              selectCurrency={from}
+              onAmountChange={(amount) => setAmount(amount)}
+            />
+
+            <div className="relative my-2 text-center">
               <button
-                type="submit"
-                className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg"
-                onClick={convert}
+                type="button"
+                className="rounded-full bg-blue-600 text-white px-4 py-2"
+                onClick={swap}
               >
-                Convert {from.toUpperCase()} to {to.toUpperCase()}
+                🔄 Swap
               </button>
-            </form>
-          </div>
+            </div>
+
+            <InputBox
+              label="To"
+              amount={convertedAmount}
+              currencyOptions={options}
+              onCurrencyChange={(currency) => setTo(currency)}
+              selectCurrency={to}
+              amountDisable
+            />
+
+            <button
+              type="submit"
+              className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg text-lg font-medium"
+              onClick={convert}
+            >
+              Convert {from.toUpperCase()} to {to.toUpperCase()}
+            </button>
+          </form>
         </div>
       </div>
     </div>
